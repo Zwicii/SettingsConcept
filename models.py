@@ -78,15 +78,15 @@ class SettingsMixin:
 
 class ObjectDetection(BaseModel):
     """Object detection configuration settings"""
-    cnn_network: CNNNetwork = Field(default=CNNNetwork.DAN, json_schema_extra={"updatable": True})
-    min_object_size: int = Field(default=6, ge=0, json_schema_extra={"updatable": True})
-    cnn_confidence_threshold: float = Field(default=0.5, ge=0, le=1, json_schema_extra={"updatable": True})
+    cnn_network: CNNNetwork = Field(default=CNNNetwork.DAN, updatable=True)
+    min_object_size: int = Field(default=6, ge=0, updatable=True)
+    cnn_confidence_threshold: float = Field(default=0.5, ge=0, le=1, updatable=True)
 
 
 class Tracker(BaseModel):
     """Tracker configuration settings"""
-    count_min_seen: int = Field(default=10, ge=0, json_schema_extra={"updatable": True})
-    count_max_unseen: int = Field(default=20, ge=0, json_schema_extra={"updatable": True})
+    count_min_seen: int = Field(default=10, ge=0, updatable=True)
+    count_max_unseen: int = Field(default=20, ge=0, updatable=True)
 
 
 class AppSettings(BaseModel, SettingsMixin):
@@ -103,8 +103,8 @@ class AppSettings(BaseModel, SettingsMixin):
 
 class NMEA(BaseModel):
     """NMEA configuration settings"""
-    ip_address: str = Field(default="127.0.0.1", json_schema_extra={"updatable": False})
-    port: int = Field(default=8080, ge=0, json_schema_extra={"updatable": False})
+    ip_address: str = Field(default="127.0.0.1", updatable=False)
+    port: int = Field(default=8080, ge=0, updatable=False)
 
 
 class SystemSettings(BaseModel, SettingsMixin):
