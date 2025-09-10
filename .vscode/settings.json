@@ -1,0 +1,15 @@
+{
+    "kiroAgent.configureMCP": "Disabled",
+
+
+    "json.schemas": [
+        {
+        "fileMatch": ["AppSettings*json"],
+            "url": "file:/Users/victoriaoberascher/Documents/concepts/settings/AppSettings.schema.json"
+        },
+        {
+        "fileMatch": ["SystemSettings*json"],
+            "url": "file:/Users/victoriaoberascher/Documents/concepts/settings/SystemSettings.schema.json"
+        }
+  ]
+}

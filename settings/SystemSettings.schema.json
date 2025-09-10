@@ -1,0 +1,32 @@
+{
+  "$defs": {
+    "NMEA": {
+      "description": "NMEA configuration settings",
+      "properties": {
+        "ip_address": {
+          "default": "127.0.0.1",
+          "title": "Ip Address",
+          "type": "string",
+          "updatable": false
+        },
+        "port": {
+          "default": 8080,
+          "minimum": 0,
+          "title": "Port",
+          "type": "integer",
+          "updatable": false
+        }
+      },
+      "title": "NMEA",
+      "type": "object"
+    }
+  },
+  "description": "System settings model",
+  "properties": {
+    "nmea": {
+      "$ref": "#/$defs/NMEA"
+    }
+  },
+  "title": "SystemSettings",
+  "type": "object"
+}
