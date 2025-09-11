@@ -48,6 +48,7 @@ class SettingsMixin:
         data = json.loads(path.read_text(encoding="utf-8"))
         
         def update(d, m: BaseModel):
+            keys_to_delete = []
             for k, v in d.items():
                 if not hasattr(m, k):
                     continue
@@ -55,12 +56,16 @@ class SettingsMixin:
                 if isinstance(v, dict) and isinstance(val, BaseModel):
                     update(v, val)
                 else:
-                    field = m.model_fields.get(k)
+                    field = m.__class__.model_fields.get(k)
                     if field and field.json_schema_extra and field.json_schema_extra.get('updatable', True):
-
-                        d[k] = val
+                        # Collect keys to delete after iteration
+                        keys_to_delete.append(k)
                     else:
                         print(f"Field is not updatable: {field}")
+            
+            # Delete the collected keys
+            for k in keys_to_delete:
+                del d[k]
         
         update(data, self)
         path.write_text(json.dumps(data, indent=2), encoding='utf-8')
@@ -85,7 +90,7 @@ class SettingsMixin:
 class ObjectDetection(BaseModel):
     """Object detection configuration settings"""
     cnn_network: CNNNetwork = Field(default=CNNNetwork.DAN, updatable=True)
-    min_object_size: int = Field(default=6, ge=0, updatable=True)
+    min_object_size: int = Field(default=6, ge=0, updatable=False)
     cnn_confidence_threshold: float = Field(default=0.5, ge=0, le=1, updatable=True)
 
 
