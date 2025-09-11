@@ -1,3 +1,4 @@
+import hashlib
 import json
 import os
 from enum import Enum
@@ -35,7 +36,12 @@ class SettingsMixin:
         print(f"Schema saved: {output_file}")
         return schema
 
-        
+    def checksum(self) -> str:
+        """Calculate a checksum for the settings instance."""
+        data = self.model_dump()
+        serialized = json.dumps(data, sort_keys=True)
+        return hashlib.sha256(serialized.encode()).hexdigest()
+
 
     def update(self, json_path: str):
         path = Path(json_path)
